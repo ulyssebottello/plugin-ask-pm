@@ -1,8 +1,8 @@
 # 🏷️ Ask-PM — Product Decision Escalation Plugin
 
 > Quand Claude tombe sur une ambiguïté produit, il pose la question au PM
-> dans Linear. Il attend la réponse (ou continue sur le reste), l'applique,
-> et met à jour la description de l'issue comme PRD vivant.
+> dans Linear. Il attend la réponse (ou continue sur le reste) et l'applique.
+> Toutes les décisions sont tracées dans les commentaires du ticket.
 
 ## Quickstart
 
@@ -83,13 +83,8 @@ claude plugin update "ask-pm@ask-pm-marketplace" --scope project
  4. Applique la décision dans le code        
            │                                 
            ▼                                 
- 5. Confirme dans les commentaires           
-    "✅ Decision applied"                    
-           │                                 
-           ▼                                 
- 6. Met à jour la DESCRIPTION                
-    de l'issue pour refléter                 
-    la décision (PRD vivant)                 
+ 5. Confirme dans le thread
+    "✅ Decision applied"
 ```
 
 ## Quand est-ce que Claude va checker la réponse ?
@@ -116,27 +111,6 @@ Claude poste la question, épuise les tâches non bloquées, puis **poll en bouc
 La skill détecte automatiquement le ticket Linear (via la branche git, le contexte,
 CLAUDE.md) et vérifie s'il y a des décisions PM non appliquées pour briefer le dev.
 
-## Mise à jour de la description (PRD vivant)
-
-Après chaque décision du PM, Claude **met à jour la description de l'issue Linear**
-en ajoutant un blockquote contextuel au bon endroit. L'objectif : n'importe qui lit
-la description et voit le spec complet à jour, avec la trace des décisions PM.
-
-Exemple :
-
-```markdown
-## Archive
-Les projets archivés sont masqués du dashboard.
-
-> **🏷️ PM Decision** _(2026-03-12)_ — Modified:
-> Les tâches restent visibles avec un badge "archivé" mais sont exclues
-> des filtres par défaut.
-> _(See thread on issue comments)_
-```
-
-Les blockquotes indiquent **Added**, **Modified** ou **Removed** pour tracer
-le type de décision.
-
 ## Composants du plugin
 
 ```
@@ -146,7 +120,7 @@ plugin-ask-pm/
 │   └── marketplace.json       # Catalogue marketplace
 ├── skills/
 │   └── ask-pm/
-│       └── SKILL.md           # Quand/comment escalader, poll, appliquer, MAJ description
+│       └── SKILL.md           # Quand/comment escalader, poll, appliquer
 ├── hooks/
 │   └── hooks.json             # Stop: flag unconfirmed product assumptions
 └── README.md
@@ -221,19 +195,7 @@ _🤖 Ask-PM · awaiting decision_
 ✅ **Ask-PM** — Decision applied
 
 Applied option B: tasks remain visible with "archived" badge,
-hidden from default filters. Issue description updated.
-```
-
-**Claude met à jour la description de ENG-456 :**
-
-```markdown
-## Archive
-Les projets archivés sont masqués du dashboard.
-
-> **🏷️ PM Decision** _(2026-03-12)_ — Modified:
-> Les tâches restent visibles avec un badge "archivé" mais sont
-> exclues du filtre par défaut.
-> _(See thread on issue comments)_
+hidden from default filters.
 ```
 
 ## FAQ
@@ -245,10 +207,6 @@ Seules les décisions qui affectent l'expérience utilisateur remontent.
 **Et si le PM met plus de 30 min en mode autonome ?**
 L'agent s'arrête proprement et liste ce qui est fait vs bloqué.
 Le dev reprend plus tard avec `/ask-pm check` et Claude continue.
-
-**La description de l'issue ne va pas devenir un bordel ?**
-Claude intègre les décisions au bon endroit dans la description existante,
-il n'ajoute pas bêtement à la fin. Le format est préservé.
 
 **Ça marche avec Cursor ?**
 Le SKILL.md suit le standard Agent Skills. Le contenu est réutilisable.

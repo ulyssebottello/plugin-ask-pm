@@ -4,7 +4,7 @@ description: >
   Escalate product decisions to the PM via Linear comments when encountering
   functional ambiguity, UX tradeoffs, or unclear expected behavior.
   Also handles: checking for PM responses, polling while waiting,
-  applying decisions, and updating the issue description as living PRD.
+  and applying decisions.
   Triggers: ambiguous specs, missing edge cases, UX tradeoffs, scope questions,
   "ask the PM", "check with product", "what did the PM say", "did the PM respond".
 argument-hint: "[question or 'check']"
@@ -16,7 +16,6 @@ You have access to **Linear MCP tools**. Use them to:
 - Create comments on issues (to ask questions)
 - Read comments on issues (to check for PM responses)
 - Read issue descriptions (to get current spec context)
-- Update issue descriptions (to incorporate decisions into the living PRD)
 
 ---
 
@@ -127,7 +126,7 @@ and you should immediately read the comments on that issue.
 
 ---
 
-## 4 — WHEN THE PM RESPONDS: APPLY + UPDATE DESCRIPTION
+## 4 — WHEN THE PM RESPONDS: APPLY DECISION
 
 When you find a PM response to an Ask-PM question:
 
@@ -149,82 +148,11 @@ when calling `save_comment`.
 ✅ **Ask-PM** — Decision applied
 
 Applied: [brief description of what was implemented based on PM's decision].
-Issue description updated. See commit [ref] / PR [ref].
+See commit [ref] / PR [ref].
 ```
 
-### Step 4: Update the issue description (LIVING PRD)
-
-This is essential. The issue description must always reflect the current,
-decided-upon spec. After each PM decision:
-
-1. **Read the current issue description** via Linear MCP (`get_issue`)
-2. **Copy the ENTIRE existing description verbatim** — every character, every
-   image (`![](url)`), every embed, every line break. Do NOT rephrase, reformat,
-   or summarize any existing content.
-3. **Insert ONLY the blockquote** at the right position in the copied description.
-   Change nothing else.
-4. **Update the issue description** via Linear MCP (`save_issue`) with the result.
-
-⚠️ **CRITICAL:** The description often contains images, embeds, and formatting
-that will be LOST if you rewrite instead of doing a surgical insert. Treat the
-existing description as read-only — your only edit is adding the blockquote.
-
-**How to update the description:**
-
-- Find the relevant section and insert the blockquote right after it.
-- The blockquote traces what was decided: addition, modification, or removal.
-- Do NOT just append to the bottom — place it in context.
-- If there is no obvious section, add a `## Decisions` section at the end
-  with the blockquote(s).
-- **Never rewrite, reformat, or remove any existing content — including images.**
-
-**Blockquote format:**
-
-```markdown
-> **🏷️ PM Decision** _(2025-03-12)_ — [Added | Modified | Removed]:
-> [Concise description of what was decided and why.]
-> _(See thread on issue comments)_
-```
-
-**Examples inline in the description:**
-
-```markdown
-### Archive behavior
-
-When a project is archived, tasks are soft-deleted after 30 days.
-
-> **🏷️ PM Decision** _(2025-03-12)_ — Modified:
-> Tasks remain visible with an "archived" badge instead of being soft-deleted.
-> Hidden from default filters but accessible via search.
-> _(See thread on issue comments)_
-```
-
-```markdown
-### Notifications
-
-Users receive email notifications for all activity.
-
-> **🏷️ PM Decision** _(2025-03-12)_ — Removed:
-> Email notifications dropped for v1. Only in-app notifications.
-> _(See thread on issue comments)_
-```
-
-```markdown
-### Empty state
-
-> **🏷️ PM Decision** _(2025-03-12)_ — Added:
-> Show onboarding checklist on first use instead of blank page.
-> _(See thread on issue comments)_
-```
-
-**Rules for description updates:**
-- **Copy-paste the full existing description first**, then insert the blockquote.
-  Never rebuild the description from memory or summary.
-- Preserve all images, embeds, links, and formatting exactly as they are.
-- If the decision contradicts something in the original description, place the
-  blockquote right after to explain the change — do NOT edit the original text.
-- The goal: anyone reading the issue description sees the complete, current spec
-  with clear trace of PM decisions — without digging through comment threads.
+**Do NOT update the issue description.** All decisions are traced in the
+comment thread.
 
 ---
 
@@ -253,6 +181,6 @@ When beginning work on a Linear issue:
 | Dev says "check Linear" / "did PM respond" | Read comments on the issue |
 | `/ask-pm check` | Read comments, report status of all pending decisions |
 | `/ask-pm [question]` | Post Ask-PM comment with the given question |
-| PM responded | Apply decision → confirm in comments → update issue description |
+| PM responded | Apply decision → confirm in thread reply |
 | Autonomous + blocked + no response after 30min | Stop gracefully, list what's done and what's blocked |
 | New session on a ticket | Read description + comments, brief dev on pending/new decisions |
