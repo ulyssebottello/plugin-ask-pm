@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "ask-pm",
-      "source": ".",
+      "source": "./",
       "description": "Escalate product ambiguities to the PM via Linear comments. Claude asks structured questions, waits for answers, applies decisions, and updates the issue description as a living PRD."
     }
   ]
