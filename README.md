@@ -22,17 +22,16 @@ Dans Claude Code :
 
 ### Utiliser — session interactive
 
-Tu codes avec Claude, il détecte les ambiguïtés et pose les questions au PM automatiquement.
-Pour checker manuellement si le PM a répondu :
+Donne un ticket Linear à Claude et code avec lui. Quand il tombe sur une ambiguïté, il pose la question au PM automatiquement.
+
+```
+Implémente https://linear.app/team/issue/ENG-456
+```
+
+Si le PM a répondu entre-temps et que tu veux que Claude applique la décision :
 
 ```
 /ask-pm check
-```
-
-Pour poser une question explicitement :
-
-```
-/ask-pm Should we paginate or use infinite scroll?
 ```
 
 ### Utiliser — mode autonome (headless)
@@ -40,7 +39,7 @@ Pour poser une question explicitement :
 Claude travaille seul, poll les réponses du PM toutes les 2 min (max 30 min) :
 
 ```bash
-claude -p "Implémente la feature ENG-456" --allowedTools '*'
+claude -p "Implémente https://linear.app/team/issue/ENG-456" --allowedTools '*'
 ```
 
 ### Mettre à jour
