@@ -49,7 +49,7 @@ Create a Linear **comment** on the issue you're working on.
 ### Comment format
 
 ```markdown
-🏷️ **Ask-PM** — Decision needed · @ulyssebottello
+🏷️ **Ask-PM** — Decision needed · @ulysse
 
 **Context:**
 [1-2 sentences: what you're implementing and what ambiguity you hit]
@@ -75,7 +75,7 @@ _🤖 Ask-PM · awaiting decision_
 - **Always propose 2-4 options** with tradeoffs. PM picks, doesn't brainstorm.
 - **One decision per comment.** Multiple questions = multiple comments.
 - **State what's blocked** so PM can prioritize their response.
-- **Always mention `@ulyssebottello`** in the comment so the PM gets notified.
+- **Always mention `@ulysse`** in the comment so the PM gets notified.
 
 ---
 
