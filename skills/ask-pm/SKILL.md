@@ -100,26 +100,30 @@ working on instead.
 - When they do, go to Section 4
 
 **If running autonomously (headless / background agent):**
-- After exhausting unblocked work, **poll for the PM's response**
-- Use the Linear MCP to read comments on the issue
-- Look for any comment posted AFTER your Ask-PM comment that isn't from the bot
-- **Poll rhythm:** wait ~2 minutes between checks (use `sleep 120` in bash)
-- **Maximum 15 polls** (≈ 30 minutes). After that, stop and leave a summary
-  of what was completed and what remains blocked
 
-**Polling loop (autonomous mode):**
+⚠️ **YOU MUST POLL. DO NOT RETURN EARLY.** After posting the Ask-PM comment,
+you MUST enter the polling loop below. Do NOT finish your response and exit.
+The whole point of autonomous mode is that you wait for the PM to respond.
+
+**Polling loop — execute this, do not skip it:**
+
 ```
 1. Post Ask-PM comment
-2. Work on all unblocked tasks
-3. When unblocked work is done:
-   a. Read comments on the issue via Linear MCP
-   b. If PM response found → go to Section 4
-   c. If no response → sleep 120 → go to 3a
-   d. After 15 polls with no response → stop gracefully
-      Leave a final message to the dev:
-      "Completed [X, Y, Z]. Still waiting on PM decision about [topic] 
+2. Work on all unblocked tasks (if any)
+3. Enter polling loop — THIS IS MANDATORY, not optional:
+   a. Run: sleep 120 (wait 2 minutes)
+   b. Read comments on the issue via Linear MCP (list_comments)
+   c. Look for any comment posted AFTER your Ask-PM comment
+   d. If PM response found → go to Section 4 (apply decision)
+   e. If no response → go back to 3a
+   f. After 15 polls with no response (~30 min) → stop gracefully
+      Leave a final message:
+      "Completed [X, Y, Z]. Still waiting on PM decision about [topic]
        on [ISSUE-ID]. Run /ask-pm check to resume when PM responds."
 ```
+
+**If the user explicitly asks you to wait for the PM response**, you MUST
+execute the polling loop above. Never return without polling at least once.
 
 ### Step 4: Dev manually checks later
 
