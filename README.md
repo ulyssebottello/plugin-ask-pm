@@ -39,7 +39,13 @@ Si le PM a répondu entre-temps et que tu veux que Claude applique la décision 
 Claude travaille seul, poll les réponses du PM toutes les 2 min (max 30 min) :
 
 ```bash
-claude -p "Implémente https://linear.app/team/issue/ENG-456" --allowedTools '*'
+claude --plugin-dir ~/Desktop/plugin-ask-pm -p "Implémente https://linear.app/team/issue/ENG-456" --allowedTools '*'
+```
+
+Ou en mode interactif avec le plugin chargé manuellement (utile pour tester) :
+
+```bash
+claude --plugin-dir ~/Desktop/plugin-ask-pm
 ```
 
 ### Mettre à jour
