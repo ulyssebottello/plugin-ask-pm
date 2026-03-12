@@ -81,51 +81,46 @@ _🤖 Ask-PM · awaiting decision_
 
 ## 3 — AFTER ASKING: WHAT TO DO WHILE WAITING
 
-This is critical. After posting the question:
+After posting the Ask-PM comment:
 
-### Step 1: Tell the developer what you did
+### Step 1: Tell the developer and ask what to do
 
-"I've posted a question to the PM on [ISSUE-ID] about [topic]. Here's what I asked: [brief summary]."
+Briefly summarize what you asked, then **ask the developer** using the
+AskUserQuestion tool:
 
-### Step 2: Work on unblocked tasks
+> "Question posée au PM sur [ISSUE-ID] à propos de [topic].
+> Tu veux que j'attende sa réponse (je poll toutes les 2 min) ou je continue
+> sur les tâches non bloquées ?"
 
-Continue on anything that doesn't depend on this decision. Tell the dev what you're
-working on instead.
+### Step 2: Act based on the developer's choice
 
-### Step 3: Check for the PM response
+**If the dev says "attends" / "wait" / "poll":**
 
-**If the dev is present (interactive session):**
-- Work on unblocked tasks
-- The dev will tell you when the PM has responded, or say "check Linear"
-- When they do, go to Section 4
-
-**If running autonomously (headless / background agent):**
-
-⚠️ **YOU MUST POLL. DO NOT RETURN EARLY.** After posting the Ask-PM comment,
-you MUST enter the polling loop below. Do NOT finish your response and exit.
-The whole point of autonomous mode is that you wait for the PM to respond.
-
-**Polling loop — execute this, do not skip it:**
+Enter the polling loop:
 
 ```
-1. Post Ask-PM comment
-2. Work on all unblocked tasks (if any)
-3. Enter polling loop — THIS IS MANDATORY, not optional:
-   a. Run: sleep 120 (wait 2 minutes)
-   b. Read comments on the issue via Linear MCP (list_comments)
-   c. Look for any comment posted AFTER your Ask-PM comment
-   d. If PM response found → go to Section 4 (apply decision)
-   e. If no response → go back to 3a
-   f. After 15 polls with no response (~30 min) → stop gracefully
-      Leave a final message:
-      "Completed [X, Y, Z]. Still waiting on PM decision about [topic]
-       on [ISSUE-ID]. Run /ask-pm check to resume when PM responds."
+1. Run: sleep 120 (wait 2 minutes)
+2. Read comments on the issue via Linear MCP (list_comments)
+3. Look for any comment posted AFTER your Ask-PM comment
+4. If PM response found → go to Section 4 (apply decision)
+5. If no response → go back to 1
+6. After 15 polls with no response (~30 min) → stop gracefully
+   Leave a final message:
+   "Still waiting on PM decision about [topic] on [ISSUE-ID].
+    Run /ask-pm check to resume when PM responds."
 ```
 
-**If the user explicitly asks you to wait for the PM response**, you MUST
-execute the polling loop above. Never return without polling at least once.
+**If the dev says "continue" / "passe à autre chose":**
 
-### Step 4: Dev manually checks later
+Continue on unblocked tasks. The dev will say "check Linear" or run
+`/ask-pm check` later when the PM has responded.
+
+**If running in headless mode (`-p`):**
+
+Skip the question — go straight into the polling loop above. In headless mode
+there is no dev to ask, so always poll.
+
+### Step 3: Dev manually checks later
 
 The dev can always say "check if PM responded on ENG-123" or run `/ask-pm check`
 and you should immediately read the comments on that issue.
