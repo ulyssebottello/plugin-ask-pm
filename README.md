@@ -6,20 +6,35 @@
 
 ## Quickstart
 
-```bash
-# 1. Installer le marketplace + plugin
+**Prérequis :** Claude Code + [MCP Linear](https://github.com/anthropics/linear-mcp) configuré.
+
+### Installer
+
+Dans Claude Code :
+
+```
 /plugin marketplace add ulyssebottello/plugin-ask-pm
-/plugin install ask-pm@ask-pm-marketplace
-
-# 2. Utiliser
-/ask-pm Should we paginate or use infinite scroll?
-/ask-pm check
-
-# 3. Mettre à jour
-claude plugin update ask-pm
 ```
 
-**Prérequis :** Claude Code + [MCP Linear](https://github.com/anthropics/linear-mcp) configuré.
+```
+/plugin install ask-pm@ask-pm-marketplace
+```
+
+### Utiliser
+
+```
+/ask-pm Should we paginate or use infinite scroll?
+```
+
+```
+/ask-pm check
+```
+
+### Mettre à jour
+
+```bash
+claude plugin update "ask-pm@ask-pm-marketplace" --scope project
+```
 
 ---
 
@@ -127,21 +142,7 @@ plugin-ask-pm/
 
 4 fichiers actifs. Zéro dépendance. Zéro infra. Le MCP Linear fait tout le travail.
 
-## Prérequis
-
-- Claude Code installé
-- **MCP Linear configuré et fonctionnel** (seul prérequis)
-
-## Installation
-
-### Installation rapide
-
-Dans Claude Code :
-
-```bash
-/plugin marketplace add ulyssebottello/plugin-ask-pm
-/plugin install ask-pm@ask-pm-marketplace
-```
+## Installation avancée
 
 ### Pour toute l'équipe (recommandé)
 
@@ -163,30 +164,13 @@ Ajoutez au `.claude/settings.json` du projet (versionné) :
 
 Quand un dev trust le repo → le plugin est actif automatiquement.
 
-### Test local
+### Test local (dev)
 
 ```bash
 claude --plugin-dir ./plugin-ask-pm
 ```
 
-## Utilisation
-
-### Automatique
-
-Claude détecte les ambiguïtés et utilise la skill sans intervention.
-Il crée le commentaire, continue le travail, et gère le suivi.
-
-### Manuelle
-
-```bash
-# Poser une question
-/ask-pm Should we paginate the activity feed or use infinite scroll?
-
-# Vérifier si le PM a répondu
-/ask-pm check
-```
-
-### Exemple concret
+## Exemple concret
 
 **Ce que Claude poste sur ENG-456 :**
 
