@@ -1,5 +1,5 @@
 {
   "name": "ask-pm",
   "description": "Escalate product ambiguities to the PM via Linear comments. Claude asks structured questions, waits for answers, applies decisions, and updates the issue description as a living PRD.",
-  "version": "1.3.0"
+  "version": "1.3.1"
 }
