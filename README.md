@@ -6,7 +6,7 @@
 
 ## Quickstart
 
-**Prérequis :** Claude Code + [MCP Linear](https://github.com/anthropics/linear-mcp) configuré.
+**Prérequis :** Claude Code + [MCP Linear](https://linear.app/docs/mcp) configuré.
 
 ### Installer
 
@@ -20,14 +20,27 @@ Dans Claude Code :
 /plugin install ask-pm@ask-pm-marketplace
 ```
 
-### Utiliser
+### Utiliser — session interactive
+
+Tu codes avec Claude, il détecte les ambiguïtés et pose les questions au PM automatiquement.
+Pour checker manuellement si le PM a répondu :
+
+```
+/ask-pm check
+```
+
+Pour poser une question explicitement :
 
 ```
 /ask-pm Should we paginate or use infinite scroll?
 ```
 
-```
-/ask-pm check
+### Utiliser — mode autonome (headless)
+
+Claude travaille seul, poll les réponses du PM toutes les 2 min (max 30 min) :
+
+```bash
+claude -p "Implémente la feature ENG-456" --allowedTools '*'
 ```
 
 ### Mettre à jour
