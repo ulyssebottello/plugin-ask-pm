@@ -3,9 +3,13 @@
   "hooks": {
     "Stop": [
       {
-        "type": "prompt",
-        "prompt": "Before finishing: did you make assumptions about user-facing behavior, edge cases, or UX tradeoffs that weren't explicitly covered in the spec or issue description? If yes, and the assumption meaningfully affects the user experience, briefly flag it: 'I assumed [X] for [reason] — you may want to /ask-pm to confirm with the PM.' One sentence max. If no meaningful product assumptions were made, say nothing.",
-        "timeout": 15
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Before finishing: did you make assumptions about user-facing behavior, edge cases, or UX tradeoffs that weren't explicitly covered in the spec or issue description? If yes, and the assumption meaningfully affects the user experience, briefly flag it: 'I assumed [X] for [reason] — you may want to /ask-pm to confirm with the PM.' One sentence max. If no meaningful product assumptions were made, say nothing.",
+            "timeout": 15
+          }
+        ]
       }
     ]
   }
