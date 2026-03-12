@@ -1,0 +1,27 @@
+{
+  "description": "Session lifecycle hooks: check for pending PM decisions on start, flag unconfirmed product assumptions on stop.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Identify the Linear issue the developer is working on — check the conversation, branch name (git branch --show-current), and CLAUDE.md for issue identifiers like ENG-123 or similar. If you find one, use the Linear MCP to: (1) read the issue description to understand the current spec, (2) read comments looking for Ask-PM markers (🏷️) without a corresponding ✅ confirmation, and PM responses that haven't been applied. If you find pending decisions or unapplied PM responses, note them and inform the developer at a natural moment. Do not interrupt — integrate this into your first substantive response. If no Linear issue is identified, do nothing.",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Before finishing: did you make assumptions about user-facing behavior, edge cases, or UX tradeoffs that weren't explicitly covered in the spec or issue description? If yes, and the assumption meaningfully affects the user experience, briefly flag it: 'I assumed [X] for [reason] — you may want to /ask-pm to confirm with the PM.' One sentence max. If no meaningful product assumptions were made, say nothing.",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

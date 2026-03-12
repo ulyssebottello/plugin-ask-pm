@@ -1,0 +1,16 @@
+{
+  "name": "ask-pm-marketplace",
+  "owner": {
+    "name": "Ulysse Bottello"
+  },
+  "metadata": {
+    "description": "Product decision escalation plugin for Claude Code — ask the PM via Linear when you hit an ambiguity."
+  },
+  "plugins": [
+    {
+      "name": "ask-pm",
+      "source": ".",
+      "description": "Escalate product ambiguities to the PM via Linear comments. Claude asks structured questions, waits for answers, applies decisions, and updates the issue description as a living PRD."
+    }
+  ]
+}
