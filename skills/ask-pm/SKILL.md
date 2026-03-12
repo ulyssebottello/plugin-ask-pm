@@ -158,18 +158,26 @@ Issue description updated. See commit [ref] / PR [ref].
 This is essential. The issue description must always reflect the current,
 decided-upon spec. After each PM decision:
 
-1. **Read the current issue description** via Linear MCP
-2. **Incorporate the decision** into the relevant section of the description
-3. **Update the issue description** via Linear MCP
+1. **Read the current issue description** via Linear MCP (`get_issue`)
+2. **Copy the ENTIRE existing description verbatim** — every character, every
+   image (`![](url)`), every embed, every line break. Do NOT rephrase, reformat,
+   or summarize any existing content.
+3. **Insert ONLY the blockquote** at the right position in the copied description.
+   Change nothing else.
+4. **Update the issue description** via Linear MCP (`save_issue`) with the result.
+
+⚠️ **CRITICAL:** The description often contains images, embeds, and formatting
+that will be LOST if you rewrite instead of doing a surgical insert. Treat the
+existing description as read-only — your only edit is adding the blockquote.
 
 **How to update the description:**
 
-- Find the relevant section of the description where the decision applies
-  and insert a **blockquote** right after the concerned paragraph/section.
+- Find the relevant section and insert the blockquote right after it.
 - The blockquote traces what was decided: addition, modification, or removal.
 - Do NOT just append to the bottom — place it in context.
 - If there is no obvious section, add a `## Decisions` section at the end
   with the blockquote(s).
+- **Never rewrite, reformat, or remove any existing content — including images.**
 
 **Blockquote format:**
 
@@ -211,10 +219,11 @@ Users receive email notifications for all activity.
 ```
 
 **Rules for description updates:**
-- Preserve all existing content. Only add or refine — never delete spec content.
-- Keep the same tone and format as the rest of the description.
-- If the decision contradicts something in the original description, update that
-  specific part and place the blockquote right after to explain the change.
+- **Copy-paste the full existing description first**, then insert the blockquote.
+  Never rebuild the description from memory or summary.
+- Preserve all images, embeds, links, and formatting exactly as they are.
+- If the decision contradicts something in the original description, place the
+  blockquote right after to explain the change — do NOT edit the original text.
 - The goal: anyone reading the issue description sees the complete, current spec
   with clear trace of PM decisions — without digging through comment threads.
 
