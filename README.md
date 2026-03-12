@@ -4,6 +4,25 @@
 > dans Linear. Il attend la réponse (ou continue sur le reste), l'applique,
 > et met à jour la description de l'issue comme PRD vivant.
 
+## Quickstart
+
+```bash
+# 1. Installer le marketplace + plugin
+/plugin marketplace add ulyssebottello/plugin-ask-pm
+/plugin install ask-pm@ask-pm-marketplace
+
+# 2. Utiliser
+/ask-pm Should we paginate or use infinite scroll?
+/ask-pm check
+
+# 3. Mettre à jour
+claude plugin update ask-pm
+```
+
+**Prérequis :** Claude Code + [MCP Linear](https://github.com/anthropics/linear-mcp) configuré.
+
+---
+
 ## Le flow complet
 
 ```
@@ -67,32 +86,29 @@ Claude poste la question, épuise les tâches non bloquées, puis **poll en bouc
 
 ### Cas 3 — Nouvelle session sur le même ticket
 
-Le hook `SessionStart` fait automatiquement :
-1. Identifier le ticket Linear (via la branche git, le contexte, CLAUDE.md)
-2. Lire les commentaires pour trouver des décisions PM non appliquées
-3. Briefer le dev : "Le PM a décidé X sur [sujet], je vais l'appliquer"
+La skill détecte automatiquement le ticket Linear (via la branche git, le contexte,
+CLAUDE.md) et vérifie s'il y a des décisions PM non appliquées pour briefer le dev.
 
 ## Mise à jour de la description (PRD vivant)
 
 Après chaque décision du PM, Claude **met à jour la description de l'issue Linear**
-pour intégrer la décision au bon endroit. L'objectif : n'importe qui lit la description
-et voit le spec complet à jour, sans fouiller les commentaires.
+en ajoutant un blockquote contextuel au bon endroit. L'objectif : n'importe qui lit
+la description et voit le spec complet à jour, avec la trace des décisions PM.
 
-Exemple — avant :
+Exemple :
 
 ```markdown
 ## Archive
 Les projets archivés sont masqués du dashboard.
+
+> **🏷️ PM Decision** _(2026-03-12)_ — Modified:
+> Les tâches restent visibles avec un badge "archivé" mais sont exclues
+> des filtres par défaut.
+> _(See thread on issue comments)_
 ```
 
-Après décision du PM :
-
-```markdown
-## Archive
-Les projets archivés sont masqués du dashboard. Les tâches associées
-restent visibles avec un badge "archivé" mais sont exclues des filtres
-par défaut. _(Décidé — voir commentaires)_
-```
+Les blockquotes indiquent **Added**, **Modified** ou **Removed** pour tracer
+le type de décision.
 
 ## Composants du plugin
 
@@ -105,7 +121,7 @@ plugin-ask-pm/
 │   └── ask-pm/
 │       └── SKILL.md           # Quand/comment escalader, poll, appliquer, MAJ description
 ├── hooks/
-│   └── hooks.json             # SessionStart: check pending · Stop: flag assumptions
+│   └── hooks.json             # Stop: flag unconfirmed product assumptions
 └── README.md
 ```
 
@@ -203,7 +219,7 @@ _🤖 Ask-PM · awaiting decision_
 > Option B. On ne perd jamais de tâches. Le badge suffit, mais masquez-les
 > du filtre par défaut.
 
-**Claude confirme :**
+**Claude confirme (en réponse dans le thread du commentaire original) :**
 
 ```markdown
 ✅ **Ask-PM** — Decision applied
@@ -216,9 +232,12 @@ hidden from default filters. Issue description updated.
 
 ```markdown
 ## Archive
-Les projets archivés sont masqués du dashboard. Les tâches associées
-restent visibles avec un badge "archivé" mais sont exclues du filtre
-par défaut. _(Décidé — voir commentaires)_
+Les projets archivés sont masqués du dashboard.
+
+> **🏷️ PM Decision** _(2026-03-12)_ — Modified:
+> Les tâches restent visibles avec un badge "archivé" mais sont
+> exclues du filtre par défaut.
+> _(See thread on issue comments)_
 ```
 
 ## FAQ
