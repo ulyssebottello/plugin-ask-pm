@@ -49,7 +49,7 @@ Create a Linear **comment** on the issue you're working on.
 ### Comment format
 
 ```markdown
-🏷️ **Ask-PM** — Decision needed
+🏷️ **Ask-PM** — Decision needed · @ulyssebottello
 
 **Context:**
 [1-2 sentences: what you're implementing and what ambiguity you hit]
@@ -75,6 +75,7 @@ _🤖 Ask-PM · awaiting decision_
 - **Always propose 2-4 options** with tradeoffs. PM picks, doesn't brainstorm.
 - **One decision per comment.** Multiple questions = multiple comments.
 - **State what's blocked** so PM can prioritize their response.
+- **Always mention `@ulyssebottello`** in the comment so the PM gets notified.
 
 ---
 
@@ -139,9 +140,11 @@ Tell the dev: "PM decided on [topic]: [brief summary of decision]."
 
 Implement according to the PM's answer.
 
-### Step 3: Confirm in Linear comments
+### Step 3: Confirm in Linear comments (thread reply)
 
-Post a comment:
+**Reply in the thread** of the original Ask-PM comment — do NOT create a new
+top-level comment. Use `parentId` (the ID of the original 🏷️ Ask-PM comment)
+when calling `save_comment`.
 
 ```markdown
 ✅ **Ask-PM** — Decision applied
@@ -161,37 +164,59 @@ decided-upon spec. After each PM decision:
 
 **How to update the description:**
 
-- Do NOT just append to the bottom. Find the relevant section and integrate
-  the decision where it logically belongs.
-- If there is no obvious section, add a `## Decisions` section at the end.
-- Format each incorporated decision clearly:
+- Find the relevant section of the description where the decision applies
+  and insert a **blockquote** right after the concerned paragraph/section.
+- The blockquote traces what was decided: addition, modification, or removal.
+- Do NOT just append to the bottom — place it in context.
+- If there is no obvious section, add a `## Decisions` section at the end
+  with the blockquote(s).
+
+**Blockquote format:**
 
 ```markdown
-<!-- Within the relevant section of the description: -->
-
-**Archive behavior:** When a project is archived, tasks remain visible
-with an "archived" badge but are hidden from default filters.
-_(Decided — see comments)_
+> **🏷️ PM Decision** _(2025-03-12)_ — [Added | Modified | Removed]:
+> [Concise description of what was decided and why.]
+> _(See thread on issue comments)_
 ```
 
-Or if adding a Decisions section:
+**Examples inline in the description:**
 
 ```markdown
-## Decisions
+### Archive behavior
 
-| Topic | Decision | Date |
-|-------|----------|------|
-| Task archive behavior | Tasks stay visible with badge, hidden from default filter | 2025-03-12 |
-| Empty state on first use | Show onboarding checklist, not blank page | 2025-03-10 |
+When a project is archived, tasks are soft-deleted after 30 days.
+
+> **🏷️ PM Decision** _(2025-03-12)_ — Modified:
+> Tasks remain visible with an "archived" badge instead of being soft-deleted.
+> Hidden from default filters but accessible via search.
+> _(See thread on issue comments)_
+```
+
+```markdown
+### Notifications
+
+Users receive email notifications for all activity.
+
+> **🏷️ PM Decision** _(2025-03-12)_ — Removed:
+> Email notifications dropped for v1. Only in-app notifications.
+> _(See thread on issue comments)_
+```
+
+```markdown
+### Empty state
+
+> **🏷️ PM Decision** _(2025-03-12)_ — Added:
+> Show onboarding checklist on first use instead of blank page.
+> _(See thread on issue comments)_
 ```
 
 **Rules for description updates:**
 - Preserve all existing content. Only add or refine — never delete spec content.
 - Keep the same tone and format as the rest of the description.
 - If the decision contradicts something in the original description, update that
-  specific part and add a note: _(Updated after PM decision — see comments)_
+  specific part and place the blockquote right after to explain the change.
 - The goal: anyone reading the issue description sees the complete, current spec
-  without having to dig through comment threads.
+  with clear trace of PM decisions — without digging through comment threads.
 
 ---
 
